@@ -1,0 +1,10 @@
+linux_baseline_packages:
+  - vim
+  - curl
+  - wget
+  - git
+  - unzip
+  - tar
+  - jq
+  - bash-completion
+  - chrony

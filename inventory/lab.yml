@@ -1,0 +1,7 @@
+all:
+  children:
+    rhel_nodes:
+      hosts:
+        ansible-lab-rhel-node:
+          ansible_host: 18.118.154.20
+          ansible_user: ec2-user

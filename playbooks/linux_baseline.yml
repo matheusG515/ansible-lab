@@ -1,0 +1,6 @@
+- name: Linux baseline packages
+  hosts: rhel_nodes
+  become: true
+  gather_facts: true
+  roles:
+    - linux_baseline
