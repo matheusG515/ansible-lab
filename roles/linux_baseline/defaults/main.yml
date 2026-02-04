@@ -1,3 +1,5 @@
+---
+# Keep this small + safe for RHEL9
 linux_baseline_packages:
   - vim
   - curl
@@ -5,6 +7,8 @@ linux_baseline_packages:
   - git
   - unzip
   - tar
-  - jq
-  - bash-completion
+  - bind-utils
+  - net-tools
+  - rsync
   - chrony
+  - python3-pip
