@@ -5,3 +5,8 @@
   tasks:
     - name: Ping hosts
       ansible.builtin.ping:
+      register: ping_out
+
+    - name: Show ping result
+      ansible.builtin.debug:
+        var: ping_out.ping
