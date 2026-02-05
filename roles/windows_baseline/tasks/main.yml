@@ -1,6 +1,6 @@
 ---
 - name: Ensure baseline packages via Chocolatey (optional)
-  ansible.windows.win_chocolatey:
+  community.windows.win_chocolatey:
     name:
       - 7zip
       - git
