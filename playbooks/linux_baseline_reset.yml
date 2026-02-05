@@ -1,0 +1,42 @@
+---
+- name: Reset Linux baseline demo (remove packages + disable chrony)
+  hosts: rhel
+  become: true
+  gather_facts: true
+
+  vars:
+    baseline_packages:
+      - vim
+      - git
+      - curl
+      - wget
+      - unzip
+      - tar
+      - chrony
+
+  tasks:
+    - name: Stop and disable chrony (ignore if missing)
+      ansible.builtin.service:
+        name: chronyd
+        state: stopped
+        enabled: false
+      ignore_errors: true
+
+    - name: Remove baseline packages (RHEL family)
+      ansible.builtin.dnf:
+        name: "{{ baseline_packages }}"
+        state: absent
+        autoremove: true
+      when: ansible_facts.os_family == "RedHat"
+
+    - name: Confirm packages are absent (rpm query)
+      ansible.builtin.command: "rpm -q {{ item }}"
+      register: rpm_check
+      failed_when: false
+      changed_when: false
+      loop: "{{ baseline_packages }}"
+
+    - name: Show rpm results
+      ansible.builtin.debug:
+        msg: "{{ item.item }} => {{ item.stdout | default('') }} (rc={{ item.rc }})"
+      loop: "{{ rpm_check.results }}"
