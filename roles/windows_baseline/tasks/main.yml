@@ -17,8 +17,3 @@
 - name: Show Windows facts summary
   ansible.builtin.debug:
     var: win_summary.stdout_lines
-
-- name: Create demo folder on the Desktop
-  ansible.windows.win_file:
-    path: 'C:\Users\Public\Desktop\Demo Example'
-    state: directory
