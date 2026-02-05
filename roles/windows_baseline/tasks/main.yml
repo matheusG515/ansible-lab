@@ -9,7 +9,7 @@
     state: started
 
 - name: Enable the built-in firewall rule for WinRM HTTP (5985)
-  ansible.windows.win_firewall_rule:
+  community.windows.win_firewall_rule:
     name: Windows Remote Management (HTTP-In)
     enabled: yes
     state: present
