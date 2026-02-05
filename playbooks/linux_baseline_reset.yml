@@ -1,6 +1,6 @@
 ---
 - name: Reset Linux baseline demo (remove packages + disable chrony)
-  hosts: rhel
+  hosts: linux
   become: true
   gather_facts: true
 
