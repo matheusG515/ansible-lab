@@ -1,0 +1,26 @@
+---
+# Windows baseline: keep it simple + safe for a lab
+# Goal: make WinRM connectivity reliable and show idempotent behavior.
+
+- name: Ensure WinRM service is set to Automatic and running
+  ansible.windows.win_service:
+    name: WinRM
+    start_mode: auto
+    state: started
+
+- name: Enable the built-in firewall rule for WinRM HTTP (5985)
+  ansible.windows.win_firewall_rule:
+    name: Windows Remote Management (HTTP-In)
+    enabled: yes
+    state: present
+
+- name: Check whether a WinRM HTTP listener exists
+  ansible.windows.win_shell: |
+    winrm enumerate winrm/config/Listener | Select-String -Pattern "Transport = HTTP"
+  register: winrm_listener_check
+  changed_when: false
+  failed_when: false
+
+- name: Create WinRM listener if missing (winrm quickconfig)
+  ansible.windows.win_command: winrm quickconfig -quiet
+  when: winrm_listener_check.rc != 0
