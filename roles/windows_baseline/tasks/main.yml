@@ -1,11 +1,6 @@
 ---
-- name: Ensure baseline packages via Chocolatey (optional)
-  community.windows.win_chocolatey:
-    name:
-      - 7zip
-      - git
-    state: present
-  when: false   # flip to true later once you confirm choco is installed
+- name: Verify WinRM connectivity (win_ping)
+  ansible.windows.win_ping:
 
 - name: Ensure Windows Update service is running
   ansible.windows.win_service:
@@ -19,5 +14,6 @@
     (Get-CimInstance Win32_OperatingSystem | Select-Object Caption, Version, BuildNumber | Format-List | Out-String)
   register: win_summary
 
-- debug:
+- name: Show Windows facts summary
+  ansible.builtin.debug:
     var: win_summary.stdout_lines
