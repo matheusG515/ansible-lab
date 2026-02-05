@@ -1,7 +1,17 @@
 all:
   children:
-    rhel_nodes:
+    linux:
       hosts:
         ansible-lab-rhel-node:
-          ansible_host: 18.118.154.20
+          ansible_host: 10.0.1.243
           ansible_user: ec2-user
+
+    windows:
+      hosts:
+        ansible-lab-windows-node:
+          ansible_host: 10.0.1.13
+          ansible_user: Administrator
+          ansible_connection: winrm
+          ansible_port: 5986
+          ansible_winrm_transport: ntlm
+          ansible_winrm_server_cert_validation: ignore
